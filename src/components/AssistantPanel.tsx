@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import type { ChatMessage } from '../types'
-import { askSocraticAssistant } from '../lib/claude'
+import { askSocraticAssistant } from '../lib/gemini'
 
 interface AssistantPanelProps {
   apiKey: string
@@ -18,7 +18,7 @@ export default function AssistantPanel({ apiKey, chat, onChatChange, onOpenSetti
     const content = draft.trim()
     if (!content || loading) return
     if (!apiKey) {
-      setError('Add your Claude API key in Settings to talk to the assistant.')
+      setError('Add your Gemini API key in Settings to talk to the assistant.')
       return
     }
     setError(null)

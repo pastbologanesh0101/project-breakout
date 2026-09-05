@@ -1,7 +1,7 @@
 import { DEFAULT_STATE, type ProjectState } from '../types'
 
 const STATE_KEY = 'project-breakout:state'
-const API_KEY_KEY = 'project-breakout:claude-api-key'
+const API_KEY_KEY = 'project-breakout:gemini-api-key'
 
 export function loadState(): ProjectState {
   try {

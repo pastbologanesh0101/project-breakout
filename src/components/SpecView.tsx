@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
-import { generateSpecFromNotes } from '../lib/claude'
+import { generateSpecFromNotes } from '../lib/gemini'
 
 interface SpecViewProps {
   notes: string
@@ -19,7 +19,7 @@ export default function SpecView({ notes, spec, onSpecChange, apiKey, archivedCo
 
   async function generate() {
     if (!apiKey) {
-      setError('Add your Claude API key in Settings to auto-generate a spec — or just read your notes below.')
+      setError('Add your Gemini API key in Settings to auto-generate a spec — or just read your notes below.')
       return
     }
     setLoading(true)
