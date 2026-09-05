@@ -1,0 +1,85 @@
+@import 'tailwindcss';
+
+:root {
+  color-scheme: dark;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  font-family: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  background: #0b0d12;
+  color: #e6e8ec;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #2a2e39;
+  border-radius: 6px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #3a3f4d;
+}
+
+.prose-notes h1,
+.prose-notes h2,
+.prose-notes h3 {
+  color: #f4f4f5;
+  font-weight: 600;
+  margin: 0.6em 0 0.3em;
+}
+.prose-notes h1 {
+  font-size: 1.25rem;
+}
+.prose-notes h2 {
+  font-size: 1.1rem;
+}
+.prose-notes h3 {
+  font-size: 1rem;
+}
+.prose-notes p {
+  margin: 0.4em 0;
+  line-height: 1.5;
+}
+.prose-notes ul,
+.prose-notes ol {
+  padding-left: 1.3em;
+  margin: 0.4em 0;
+}
+.prose-notes code {
+  background: #1b1e27;
+  padding: 0.1em 0.35em;
+  border-radius: 4px;
+  font-size: 0.85em;
+}
+.prose-notes a.timestamp-link {
+  color: #7dd3fc;
+  text-decoration: none;
+  font-weight: 600;
+  cursor: pointer;
+  border-bottom: 1px dashed #7dd3fc;
+}
+.prose-notes a.timestamp-link:hover {
+  color: #38bdf8;
+}
+.prose-notes blockquote {
+  border-left: 3px solid #3a3f4d;
+  margin: 0.5em 0;
+  padding-left: 0.8em;
+  color: #9aa1af;
+}
