@@ -1,6 +1,6 @@
 import type { ChatMessage } from '../types'
 
-const MODEL = 'gemini-2.0-flash'
+const MODEL = 'gemini-3.6-flash'
 const API_URL = (apiKey: string) =>
   `https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent?key=${encodeURIComponent(apiKey)}`
 
