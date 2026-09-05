@@ -74,8 +74,8 @@ export default function App() {
 
       {loadError && <p className="bg-red-950/50 px-4 py-1.5 text-xs text-red-300">{loadError}</p>}
 
-      <div className="grid flex-1 grid-cols-1 gap-3 overflow-hidden p-3 lg:grid-cols-[1.1fr_1.4fr_1fr]">
-        <div className="flex min-h-0 flex-col gap-3">
+      <div className="grid flex-1 grid-cols-1 gap-3 overflow-y-auto p-3 lg:overflow-hidden lg:grid-cols-[1.1fr_1.4fr_1fr]">
+        <div className="flex h-[80vh] min-h-0 flex-col gap-3 lg:h-auto">
           {state.phase === 'rebuilding' ? (
             <SpecView
               notes={state.notes}
@@ -98,7 +98,7 @@ export default function App() {
           </div>
         </div>
 
-        <div className="min-h-[300px] overflow-hidden rounded-lg border border-zinc-800">
+        <div className="h-[60vh] overflow-hidden rounded-lg border border-zinc-800 lg:h-auto lg:min-h-[300px]">
           <CodeEditor
             language={state.language}
             value={state.code}
@@ -107,7 +107,7 @@ export default function App() {
           />
         </div>
 
-        <div className="min-h-0">
+        <div className="h-[60vh] min-h-0 lg:h-auto">
           <NotesPanel
             notes={state.notes}
             onChange={(notes) => patch({ notes })}
