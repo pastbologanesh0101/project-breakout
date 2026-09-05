@@ -52,7 +52,7 @@ export default async function handler(req: any, res: any) {
     }
     systemPrompt = SPEC_SYSTEM_PROMPT
     contents = [{ role: 'user', parts: [{ text: `Here are my raw notes from following a tutorial:\n\n${notes}` }] }]
-    maxOutputTokens = 1024
+    maxOutputTokens = 2048
   } else if (mode === 'chat') {
     if (!Array.isArray(messages)) {
       res.status(400).json({ error: 'Missing messages for chat.' })
@@ -63,7 +63,7 @@ export default async function handler(req: any, res: any) {
       role: m.role === 'assistant' ? 'model' : 'user',
       parts: [{ text: m.content }],
     }))
-    maxOutputTokens = 512
+    maxOutputTokens = 1024
   } else {
     res.status(400).json({ error: 'Unknown mode. Expected "chat" or "spec".' })
     return
@@ -76,7 +76,7 @@ export default async function handler(req: any, res: any) {
       body: JSON.stringify({
         system_instruction: { parts: [{ text: systemPrompt }] },
         contents,
-        generationConfig: { maxOutputTokens, thinkingConfig: { thinkingBudget: 0 } },
+        generationConfig: { maxOutputTokens },
       }),
     })
 
