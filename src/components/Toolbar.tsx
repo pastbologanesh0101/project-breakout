@@ -10,7 +10,6 @@ interface ToolbarProps {
   onLanguageChange: (lang: string) => void
   phase: Phase
   onWipeClick: () => void
-  onSettingsClick: () => void
 }
 
 export default function Toolbar({
@@ -20,7 +19,6 @@ export default function Toolbar({
   onLanguageChange,
   phase,
   onWipeClick,
-  onSettingsClick,
 }: ToolbarProps) {
   const [draftUrl, setDraftUrl] = useState(videoUrl)
 
@@ -84,10 +82,6 @@ export default function Toolbar({
           💣 Wipe & Rebuild Solo
         </button>
       )}
-
-      <button onClick={onSettingsClick} className="rounded-md px-2 py-1.5 text-zinc-500 hover:text-zinc-200" title="Settings">
-        ⚙
-      </button>
     </div>
   )
 }

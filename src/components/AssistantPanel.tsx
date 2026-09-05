@@ -3,13 +3,11 @@ import type { ChatMessage } from '../types'
 import { askSocraticAssistant } from '../lib/gemini'
 
 interface AssistantPanelProps {
-  apiKey: string
   chat: ChatMessage[]
   onChatChange: (chat: ChatMessage[]) => void
-  onOpenSettings: () => void
 }
 
-export default function AssistantPanel({ apiKey, chat, onChatChange, onOpenSettings }: AssistantPanelProps) {
+export default function AssistantPanel({ chat, onChatChange }: AssistantPanelProps) {
   const [draft, setDraft] = useState('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -17,10 +15,6 @@ export default function AssistantPanel({ apiKey, chat, onChatChange, onOpenSetti
   async function send() {
     const content = draft.trim()
     if (!content || loading) return
-    if (!apiKey) {
-      setError('Add your Gemini API key in Settings to talk to the assistant.')
-      return
-    }
     setError(null)
     const userMsg: ChatMessage = { id: crypto.randomUUID(), role: 'user', content }
     const nextChat = [...chat, userMsg]
@@ -28,7 +22,7 @@ export default function AssistantPanel({ apiKey, chat, onChatChange, onOpenSetti
     setDraft('')
     setLoading(true)
     try {
-      const reply = await askSocraticAssistant(apiKey, nextChat)
+      const reply = await askSocraticAssistant(nextChat)
       onChatChange([...nextChat, { id: crypto.randomUUID(), role: 'assistant', content: reply }])
     } catch (err: any) {
       setError(err.message ?? 'Something went wrong.')
@@ -44,9 +38,6 @@ export default function AssistantPanel({ apiKey, chat, onChatChange, onOpenSetti
           <h3 className="text-sm font-semibold text-zinc-200">Socratic Assistant</h3>
           <p className="text-[11px] text-zinc-500">Hints and questions only — it will never write code for you.</p>
         </div>
-        <button onClick={onOpenSettings} className="text-xs text-zinc-500 hover:text-zinc-300" title="Set API key">
-          ⚙
-        </button>
       </div>
 
       <div className="flex-1 space-y-2 overflow-y-auto rounded-md border border-zinc-800 bg-zinc-900 p-3">

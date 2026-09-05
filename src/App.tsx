@@ -4,19 +4,16 @@ import VideoPanel from './components/VideoPanel'
 import CodeEditor from './components/CodeEditor'
 import NotesPanel from './components/NotesPanel'
 import AssistantPanel from './components/AssistantPanel'
-import SettingsModal from './components/SettingsModal'
 import WipeConfirmModal from './components/WipeConfirmModal'
 import SpecView from './components/SpecView'
 import { DEFAULT_STATE, type ProjectState } from './types'
-import { loadApiKey, loadState, saveApiKey, saveState } from './lib/storage'
+import { loadState, saveState } from './lib/storage'
 import { extractYouTubeId } from './lib/youtube'
 
 export default function App() {
   const [state, setState] = useState<ProjectState>(() => loadState())
-  const [apiKey, setApiKey] = useState(() => loadApiKey())
   const [player, setPlayer] = useState<any>(null)
   const [editorFocused, setEditorFocused] = useState(false)
-  const [showSettings, setShowSettings] = useState(false)
   const [showWipeConfirm, setShowWipeConfirm] = useState(false)
   const [loadError, setLoadError] = useState<string | null>(null)
 
@@ -73,7 +70,6 @@ export default function App() {
         onLanguageChange={(language) => patch({ language })}
         phase={state.phase}
         onWipeClick={() => setShowWipeConfirm(true)}
-        onSettingsClick={() => setShowSettings(true)}
       />
 
       {loadError && <p className="bg-red-950/50 px-4 py-1.5 text-xs text-red-300">{loadError}</p>}
@@ -85,7 +81,6 @@ export default function App() {
               notes={state.notes}
               spec={state.spec}
               onSpecChange={(spec) => patch({ spec })}
-              apiKey={apiKey}
               archivedCode={state.archivedCode}
               onRestart={handleRestart}
             />
@@ -99,12 +94,7 @@ export default function App() {
           )}
 
           <div className="min-h-0 flex-1 overflow-hidden">
-            <AssistantPanel
-              apiKey={apiKey}
-              chat={state.chat}
-              onChatChange={(chat) => patch({ chat })}
-              onOpenSettings={() => setShowSettings(true)}
-            />
+            <AssistantPanel chat={state.chat} onChatChange={(chat) => patch({ chat })} />
           </div>
         </div>
 
@@ -127,20 +117,7 @@ export default function App() {
         </div>
       </div>
 
-      {showSettings && (
-        <SettingsModal
-          apiKey={apiKey}
-          onSave={(key) => {
-            setApiKey(key)
-            saveApiKey(key)
-          }}
-          onClose={() => setShowSettings(false)}
-        />
-      )}
-
-      {showWipeConfirm && (
-        <WipeConfirmModal hasApiKey={!!apiKey} onConfirm={handleWipeConfirmed} onClose={() => setShowWipeConfirm(false)} />
-      )}
+      {showWipeConfirm && <WipeConfirmModal onConfirm={handleWipeConfirmed} onClose={() => setShowWipeConfirm(false)} />}
     </div>
   )
 }

@@ -7,25 +7,20 @@ interface SpecViewProps {
   notes: string
   spec: string
   onSpecChange: (spec: string) => void
-  apiKey: string
   archivedCode: string
   onRestart: () => void
 }
 
-export default function SpecView({ notes, spec, onSpecChange, apiKey, archivedCode, onRestart }: SpecViewProps) {
+export default function SpecView({ notes, spec, onSpecChange, archivedCode, onRestart }: SpecViewProps) {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [revealed, setRevealed] = useState(false)
 
   async function generate() {
-    if (!apiKey) {
-      setError('Add your Gemini API key in Settings to auto-generate a spec — or just read your notes below.')
-      return
-    }
     setLoading(true)
     setError(null)
     try {
-      const result = await generateSpecFromNotes(apiKey, notes)
+      const result = await generateSpecFromNotes(notes)
       onSpecChange(result)
     } catch (err: any) {
       setError(err.message ?? 'Something went wrong.')
