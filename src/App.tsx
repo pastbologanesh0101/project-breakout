@@ -94,7 +94,11 @@ export default function App() {
           )}
 
           <div className="min-h-0 flex-1 overflow-hidden">
-            <AssistantPanel chat={state.chat} onChatChange={(chat) => patch({ chat })} />
+            <AssistantPanel
+              chat={state.chat}
+              onChatChange={(chat) => patch({ chat })}
+              context={{ code: state.code, language: state.language, notes: state.notes }}
+            />
           </div>
         </div>
 

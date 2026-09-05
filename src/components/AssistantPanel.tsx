@@ -1,13 +1,14 @@
 import { useState } from 'react'
 import type { ChatMessage } from '../types'
-import { askSocraticAssistant } from '../lib/gemini'
+import { askSocraticAssistant, type AssistantContext } from '../lib/gemini'
 
 interface AssistantPanelProps {
   chat: ChatMessage[]
   onChatChange: (chat: ChatMessage[]) => void
+  context: AssistantContext
 }
 
-export default function AssistantPanel({ chat, onChatChange }: AssistantPanelProps) {
+export default function AssistantPanel({ chat, onChatChange, context }: AssistantPanelProps) {
   const [draft, setDraft] = useState('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -22,7 +23,7 @@ export default function AssistantPanel({ chat, onChatChange }: AssistantPanelPro
     setDraft('')
     setLoading(true)
     try {
-      const reply = await askSocraticAssistant(nextChat)
+      const reply = await askSocraticAssistant(nextChat, context)
       onChatChange([...nextChat, { id: crypto.randomUUID(), role: 'assistant', content: reply }])
     } catch (err: any) {
       setError(err.message ?? 'Something went wrong.')

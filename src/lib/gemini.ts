@@ -14,8 +14,20 @@ async function callApi(body: Record<string, unknown>): Promise<string> {
   return data.text || '(no response)'
 }
 
-export async function askSocraticAssistant(history: ChatMessage[]): Promise<string> {
-  return callApi({ mode: 'chat', messages: history.map((m) => ({ role: m.role, content: m.content })) })
+export interface AssistantContext {
+  code: string
+  language: string
+  notes: string
+}
+
+export async function askSocraticAssistant(history: ChatMessage[], context: AssistantContext): Promise<string> {
+  return callApi({
+    mode: 'chat',
+    messages: history.map((m) => ({ role: m.role, content: m.content })),
+    code: context.code,
+    language: context.language,
+    notes: context.notes,
+  })
 }
 
 export async function generateSpecFromNotes(notes: string): Promise<string> {
